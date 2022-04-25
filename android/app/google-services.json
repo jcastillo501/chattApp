@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "503052913760",
+    "project_id": "digichat-8be74",
+    "storage_bucket": "digichat-8be74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503052913760:android:b45c158fe0979230cc0705",
+        "android_client_info": {
+          "package_name": "com.example.digi_chatt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503052913760-jfgkf5isl0frl9u8pf7tkp1jcmlhv7sl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.digi_chatt",
+            "certificate_hash": "9ec58718243f2aa81a704b859ef72ff9f8d19d53"
+          }
+        },
+        {
+          "client_id": "503052913760-ol5k9hutfuiir5hnf9ev31pvrbrivir2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUKH1SLwQnpf54VAVKgNQ6wN3Gkv3hm2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503052913760-ol5k9hutfuiir5hnf9ev31pvrbrivir2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
