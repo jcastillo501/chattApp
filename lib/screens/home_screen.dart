@@ -47,15 +47,16 @@ class _ChatRoomScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [Text('Home Screen')],
+            children: const [Text('Contacts')],
           ),
           actions: [
             Container(
               child: IconButton(
-                  onPressed: () {
-                    loginProvider.signOutGoogle();
+                  onPressed: () async {
+                    await loginProvider.signOutGoogle();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (_) => const WelcomeScreen()));
                   },
@@ -72,11 +73,12 @@ class _ChatRoomScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           SizedBox(
-            height: screendHeight * 0.4,
+            height: screendHeight * 0.9,
             width: screendWidth,
             child: ListView.builder(
                 itemCount: homeProvider.userList.length,
                 itemBuilder: (context, index) {
+                  // homeProvider.indexs = index;
                   return Column(
                     children: <Widget>[
                       SizedBox(height: screendHeight * 0.01),
@@ -98,27 +100,23 @@ class _ChatRoomScreenState extends State<HomeScreen> {
                                 ),
                                 Text(homeProvider.userList[index].userId),
                                 Text(homeProvider.userList[index].status),
-                                // Text(homeProvider.userList[index].status),
                               ],
                             )),
                         onTap: () async {
-                          chatsProvider.generateChatId(
+                          await chatsProvider.generateChatId(
                               loginProvider.firebaseUser?.uid,
                               homeProvider.userList[index].userId);
                           await db
                               .collection('chats')
                               .doc(chatsProvider.chatId)
                               .set({
+                            'chatId': chatsProvider.chatId,
                             'idFrom': loginProvider.firebaseUser?.uid,
                             'idTo': homeProvider.userList[index].userId,
-                            'timeSend': DateTime.now()
-                                .microsecondsSinceEpoch
-                                .toString(),
-                            'message': 'holaaa',
                             'chattingWith':
                                 homeProvider.userList[index].userName
                           });
-                          chatsProvider.getChats(context);
+                          // await chatsProvider.getMessages();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => const ChatRoomScreen()));
                         },

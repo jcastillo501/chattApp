@@ -1,18 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digi_chatt/models/user_model.dart';
-import 'package:digi_chatt/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-enum Status {
-  uninitialized,
-  authenticated,
-  authenticating,
-  authenticateError,
-  authenticateCanceled,
-}
 
 class LoginProvider extends ChangeNotifier {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -42,29 +32,13 @@ class LoginProvider extends ChangeNotifier {
 
   Future signIn(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userMail = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      firebaseUser = userMail.user;
       notifyListeners();
     } on FirebaseAuthException catch (e) {
       return e.message;
     }
-  }
-
-  Future<void> conectionStatus(String status) async {
-    _auth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        status = 'online';
-        db
-            .collection('users')
-            .doc(firebaseUser?.uid)
-            .update({'status': status});
-      } else {
-        status = 'offline';
-        db
-            .collection('users')
-            .doc(firebaseUser?.uid)
-            .update({'status': status});
-      }
-    });
   }
 
   Future<bool> checkIfEmailInUse(String? email) async {
@@ -116,8 +90,8 @@ class LoginProvider extends ChangeNotifier {
     await db.collection('users').doc(firebaseUser?.uid).update(
       {'status': 'offline'},
     );
+
     await _googleSignIn.signOut();
-    // await _googleSignIn.disconnect();
     await _auth.signOut();
 
     notifyListeners();

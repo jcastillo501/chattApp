@@ -24,7 +24,14 @@ class UserFormProvider with ChangeNotifier {
 
   Future addData(String name, String tel) async {
     await db.collection('users').doc(firebaseUser?.uid).set(
-      {'nombres': nameCont, 'telefono': telf, 'id': firebaseUser?.uid},
+      {
+        'nombres': nameCont,
+        'telefono': telf,
+        'id': firebaseUser?.uid,
+        'createAd': DateTime.now().microsecondsSinceEpoch.toString(),
+        'chattingWith': null,
+        'status': 'online'
+      },
     );
     notifyListeners();
   }

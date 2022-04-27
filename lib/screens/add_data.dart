@@ -1,5 +1,4 @@
 import 'package:digi_chatt/providers/add_data_provider.dart';
-import 'package:digi_chatt/screens/chat_room_screen.dart';
 import 'package:digi_chatt/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
